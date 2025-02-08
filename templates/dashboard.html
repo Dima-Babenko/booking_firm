@@ -7,5 +7,7 @@
 <body>
     <h1>Вітаємо, {{ user.username }}!</h1>
     <p>Ви успішно увійшли в систему.</p>
+    <a href="{% url 'create_booking' %}"><button>Створити бронювання</button></a>
+    <a href="{% url 'my_bookings' %}"><button>Мої бронювання</button></a>
 </body>
 </html>

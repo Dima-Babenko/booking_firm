@@ -24,3 +24,11 @@ def register(request):
 @login_required
 def dashboard(request):
     return render(request, "dashboard.html")
+
+@login_required
+def create_booking(request):
+    return render(request, "create_booking.html")
+
+@login_required
+def my_bookings(request):
+    return render(request, "my_bookings.html")
