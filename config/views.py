@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from config.forms import RegisterForm
+from booking.models import Location
 
 
 def home(request):
@@ -27,7 +28,8 @@ def dashboard(request):
 
 @login_required
 def create_booking(request):
-    return render(request, "create_booking.html")
+    locations = Location.objects.all()
+    return render(request, "create_booking.html", {"locations": locations})
 
 @login_required
 def my_bookings(request):
