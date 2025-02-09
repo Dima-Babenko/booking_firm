@@ -2,10 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Створити бронювання</title>
 </head>
 <body>
     <h2>Створити бронювання</h2>
     <a href="{% url 'dashboard' %}"><button>Назад</button></a>
+
+    <h3>Доступні локації:</h3>
+    <ul>
+        {% for location in locations %}
+            <li>
+                <h4>{{ location.title }}</h4>
+                <p>Ціна: {{ location.price }} грн</p>
+                <p>Місткість: {{ location.capacity }} осіб</p>
+                <p>Опис: {{ location.description }}</p>
+                <p>{% if location.is_available %}❌ Недоступно{% else %}✅ Доступно{% endif %}</p>
+            </li>
+        {% empty %}
+            <p>Немає доступних локацій.</p>
+        {% endfor %}
+    </ul>
 </body>
 </html>
