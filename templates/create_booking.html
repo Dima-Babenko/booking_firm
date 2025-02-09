@@ -3,6 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>Створити бронювання</title>
+    <script>
+        function openBookingModal(locationId) {
+            let modal = document.getElementById("bookingModal");
+            document.getElementById("locationId").value = locationId;
+            modal.style.display = "block";
+        }
+
+        function closeBookingModal() {
+            document.getElementById("bookingModal").style.display = "none";
+        }
+
+        // Робимо модальне вікно перетягуваним
+        function makeModalDraggable() {
+            let modal = document.getElementById("bookingModal");
+            let header = document.getElementById("modalHeader");
+
+            let offsetX = 0, offsetY = 0, mouseX = 0, mouseY = 0;
+
+            header.onmousedown = function (event) {
+                event.preventDefault();
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+                document.onmousemove = moveModal;
+                document.onmouseup = stopMovingModal;
+            };
+
+            function moveModal(event) {
+                offsetX = mouseX - event.clientX;
+                offsetY = mouseY - event.clientY;
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+                modal.style.left = (modal.offsetLeft - offsetX) + "px";
+                modal.style.top = (modal.offsetTop - offsetY) + "px";
+            }
+
+            function stopMovingModal() {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+        }
+
+        window.onload = makeModalDraggable;
+    </script>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid black;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            cursor: move;
+        }
+        .modal button {
+            margin-top: 10px;
+        }
+        .modal-header {
+            cursor: move;
+            background-color: #f1f1f1;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <h2>Створити бронювання</h2>
@@ -16,11 +83,28 @@
                 <p>Ціна: {{ location.price }} грн</p>
                 <p>Місткість: {{ location.capacity }} осіб</p>
                 <p>Опис: {{ location.description }}</p>
-                <p>{% if location.is_available %}❌ Недоступно{% else %}✅ Доступно{% endif %}</p>
+                <p>{% if location.is_available %}✅ Доступно{% else %}❌ Недоступно{% endif %}</p>
+                {% if location.is_available %}
+                    <button onclick="openBookingModal({{ location.id }})">Забронювати</button>
+                {% endif %}
             </li>
         {% empty %}
             <p>Немає доступних локацій.</p>
         {% endfor %}
     </ul>
+
+    <!-- Спливаюче вікно бронювання -->
+    <div id="bookingModal" class="modal">
+        <div id="modalHeader" class="modal-header">Перетягніть, щоб перемістити</div>
+        <h3>Оберіть кількість днів</h3>
+        <form method="post" action="{% url 'book_location' %}">
+            {% csrf_token %}
+            <input type="hidden" name="location_id" id="locationId">
+            <label for="days">Кількість днів:</label>
+            <input type="number" name="days" id="days" min="1" required>
+            <button type="submit">Підтвердити</button>
+            <button type="button" onclick="closeBookingModal()">Закрити</button>
+        </form>
+    </div>
 </body>
 </html>
