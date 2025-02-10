@@ -1,51 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <title>Створити бронювання</title>
-    <script>
-        function openBookingModal(locationId) {
-            let modal = document.getElementById("bookingModal");
-            document.getElementById("locationId").value = locationId;
-            modal.style.display = "block";
-        }
-
-        function closeBookingModal() {
-            document.getElementById("bookingModal").style.display = "none";
-        }
-
-        // Робимо модальне вікно перетягуваним
-        function makeModalDraggable() {
-            let modal = document.getElementById("bookingModal");
-            let header = document.getElementById("modalHeader");
-
-            let offsetX = 0, offsetY = 0, mouseX = 0, mouseY = 0;
-
-            header.onmousedown = function (event) {
-                event.preventDefault();
-                mouseX = event.clientX;
-                mouseY = event.clientY;
-                document.onmousemove = moveModal;
-                document.onmouseup = stopMovingModal;
-            };
-
-            function moveModal(event) {
-                offsetX = mouseX - event.clientX;
-                offsetY = mouseY - event.clientY;
-                mouseX = event.clientX;
-                mouseY = event.clientY;
-                modal.style.left = (modal.offsetLeft - offsetX) + "px";
-                modal.style.top = (modal.offsetTop - offsetY) + "px";
-            }
-
-            function stopMovingModal() {
-                document.onmousemove = null;
-                document.onmouseup = null;
-            }
-        }
-
-        window.onload = makeModalDraggable;
-    </script>
     <style>
         .modal {
             display: none;
@@ -93,18 +50,64 @@
         {% endfor %}
     </ul>
 
-    <!-- Спливаюче вікно бронювання -->
     <div id="bookingModal" class="modal">
         <div id="modalHeader" class="modal-header">Перетягніть, щоб перемістити</div>
         <h3>Оберіть кількість днів</h3>
-        <form method="post" action="{% url 'book_location' %}">
+        <form method="post" action="{% url 'book_location' 0 %}" id="bookingForm">
             {% csrf_token %}
-            <input type="hidden" name="location_id" id="locationId">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
+
             <label for="days">Кількість днів:</label>
             <input type="number" name="days" id="days" min="1" required>
+
             <button type="submit">Підтвердити</button>
             <button type="button" onclick="closeBookingModal()">Закрити</button>
         </form>
     </div>
+
+    <script>
+        function openBookingModal(locationId) {
+            let modal = document.getElementById("bookingModal");
+            let form = document.getElementById("bookingForm");
+            form.action = "{% url 'book_location' 0 %}".replace("0", locationId);
+            modal.style.display = "block";
+        }
+
+        function closeBookingModal() {
+            document.getElementById("bookingModal").style.display = "none";
+        }
+
+        function makeModalDraggable() {
+            let modal = document.getElementById("bookingModal");
+            let header = document.getElementById("modalHeader");
+
+            let offsetX = 0, offsetY = 0, mouseX = 0, mouseY = 0;
+
+            header.onmousedown = function (event) {
+                event.preventDefault();
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+                document.onmousemove = moveModal;
+                document.onmouseup = stopMovingModal;
+            };
+
+            function moveModal(event) {
+                offsetX = mouseX - event.clientX;
+                offsetY = mouseY - event.clientY;
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+                modal.style.left = (modal.offsetLeft - offsetX) + "px";
+                modal.style.top = (modal.offsetTop - offsetY) + "px";
+            }
+
+            function stopMovingModal() {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+        }
+
+        window.onload = makeModalDraggable;
+    </script>
 </body>
 </html>

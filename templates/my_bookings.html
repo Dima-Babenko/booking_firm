@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Мої бронювання</title>
 </head>
 <body>
     <h2>Мої бронювання</h2>
     <a href="{% url 'dashboard' %}"><button>Назад</button></a>
+
+    <ul>
+        {% for booking in bookings %}
+            <li>
+                <h4>{{ booking.location.title }}</h4>
+                <p>Початок: {{ booking.start_time|date:"d.m.Y H:i" }}</p>
+                <p>Кінець: {{ booking.end_time|date:"d.m.Y H:i" }}</p>
+                <p>Загальна ціна: {{ booking.total_price }} грн</p>
+                <form action="{% url 'complete_booking' booking.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Завершити бронювання</button>
+                </form>
+            </li>
+        {% empty %}
+            <p>У вас немає бронювань.</p>
+        {% endfor %}
+    </ul>
 </body>
 </html>
