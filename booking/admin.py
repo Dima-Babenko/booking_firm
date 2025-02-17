@@ -9,4 +9,13 @@ class BookingAdmin(admin.ModelAdmin):
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
     list_display = ('title', 'price', 'is_available', 'capacity', 'description')
+    list_filter = ('is_available',)
+    fieldsets = (
+        (None, {'fields': ('title', 'price', 'capacity',)}),
+        ('Content', {'fields': ('description',)}),)
+    search_fields = ('price',)
+
+    @admin.action(description="available")
+    def Available(self, request, queryset):
+        queryset.update(is_available = "True")
 

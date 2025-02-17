@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from config.forms import RegisterForm
 from booking.models import Location
 
-
 def home(request):
     return render(request, "home.html")
 
