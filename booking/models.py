@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-
+from booking.validate import validate_start_date
 User = get_user_model()
 
 class Location(models.Model):
@@ -13,7 +13,7 @@ class Location(models.Model):
 class Booking(models.Model):
     user = models.ForeignKey(User, related_name="bookings", on_delete=models.CASCADE)
     location = models.ForeignKey(Location, related_name="locations", on_delete=models.CASCADE)
-    start_time = models.DateTimeField()
+    start_time = models.DateTimeField(validators=[validate_start_date])
     end_time = models.DateTimeField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True,)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
