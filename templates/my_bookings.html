@@ -12,9 +12,10 @@
         {% for booking in bookings %}
             <li>
                 <h4>{{ booking.location.title }}</h4>
-                <p>Початок: {{ booking.start_time|date:"d.m.Y H:i" }}</p>
-                <p>Кінець: {{ booking.end_time|date:"d.m.Y H:i" }}</p>
+                <p>Початок: {{ booking.start_time|date:"d.m.Y" }}</p>
+                <p>Кінець: {{ booking.end_time|date:"d.m.Y" }}</p>
                 <p>Загальна ціна: {{ booking.total_price }} грн</p>
+                <p>{% if booking.confirmed %}✅ Підтверджено{% else %}⏳ Очікує підтвердження{% endif %}</p>
                 <form action="{% url 'complete_booking' booking.id %}" method="post">
                     {% csrf_token %}
                     <button type="submit">Завершити бронювання</button>

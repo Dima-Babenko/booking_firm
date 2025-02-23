@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.utils.timezone import now, timedelta
+from django.utils.timezone import now
 from django.core.mail import send_mail
 from django.conf import settings
 from config.forms import RegisterForm
 from booking.models import Location, Booking
+from datetime import datetime
 
 
 def home(request):
@@ -31,23 +32,42 @@ def dashboard(request):
 
 @login_required
 def create_booking(request):
-    locations = Location.objects.filter(is_available=True)  # Додаємо фільтр доступності
+    locations = Location.objects.filter(is_available=True)
     return render(request, "create_booking.html", {"locations": locations})
 
 
 @login_required
-def book_location(request, location_id):
+def location_detail(request, location_id):
     location = get_object_or_404(Location, id=location_id)
 
     if request.method == "POST":
         email = request.POST.get("email")
-        days = int(request.POST.get("days", 1))
+        start_date = request.POST.get("start_date")
+        end_date = request.POST.get("end_date")
 
-        if not email:
-            return render(request, "book_location.html", {"location": location, "error": "Email є обов'язковим."})
+        if not email or not start_date or not end_date:
+            return render(request, "location_detail.html", {
+                "location": location,
+                "error": "Будь ласка, заповніть всі поля."
+            })
 
-        start_time = now()
-        end_time = start_time + timedelta(days=days)
+        start_time = datetime.strptime(start_date, "%Y-%m-%d")
+        end_time = datetime.strptime(end_date, "%Y-%m-%d")
+
+        # Перевірка наявності бронювання
+        overlapping_bookings = Booking.objects.filter(
+            location=location,
+            start_time__lt=end_time,
+            end_time__gt=start_time
+        )
+
+        if overlapping_bookings.exists():
+            return render(request, "location_detail.html", {
+                "location": location,
+                "error": "Ця локація вже зайнята у вибрані дати."
+            })
+
+        days = (end_time - start_time).days
         total_price = location.price * days
 
         booking = Booking.objects.create(
@@ -58,9 +78,6 @@ def book_location(request, location_id):
             total_price=total_price,
             confirmed=False
         )
-
-        location.is_available = False
-        location.save()
 
         confirmation_link = f"{settings.SITE_URL}/confirm-booking/{booking.id}/"
         send_mail(
@@ -73,7 +90,7 @@ def book_location(request, location_id):
 
         return redirect("my_bookings")
 
-    return render(request, "book_location.html", {"location": location})
+    return render(request, "location_detail.html", {"location": location})
 
 
 @login_required
@@ -85,10 +102,7 @@ def my_bookings(request):
 @login_required
 def complete_booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id, user=request.user)
-    location = booking.location
     booking.delete()
-    location.is_available = True
-    location.save()
     return redirect("my_bookings")
 
 
