@@ -8,7 +8,6 @@ from config.forms import RegisterForm
 from booking.models import Location, Booking
 from datetime import datetime
 
-
 def home(request):
     return render(request, "home.html")
 
