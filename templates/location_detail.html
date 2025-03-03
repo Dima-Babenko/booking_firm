@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ location.title }}</title>
+</head>
+<body>
+    <h2>{{ location.title }}</h2>
+    <p>Ціна: {{ location.price }} грн</p>
+    <p>Місткість: {{ location.capacity }} осіб</p>
+    <p>Опис: {{ location.description }}</p>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="email">Ваш Email:</label><br>
+        <input type="email" name="email" required><br><br>
+
+        <label for="start_date">Дата початку:</label><br>
+        <input type="date" name="start_date" required><br><br>
+
+        <label for="end_date">Дата завершення:</label><br>
+        <input type="date" name="end_date" required><br><br>
+
+        <button type="submit">Забронювати</button>
+    </form>
+
+    <a href="{% url 'create_booking' %}"><button>Назад до локацій</button></a>
+</body>
+</html>

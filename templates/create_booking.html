@@ -8,6 +8,15 @@
     <h2>Доступні локації</h2>
     <a href="{% url 'dashboard' %}"><button>Назад</button></a>
 
+    <form method="GET">
+        <label>
+            <input type="checkbox" name="available" value="true"
+                {% if request.GET.available == "true" %}checked{% endif %}>
+            Тільки доступні
+        </label>
+        <button type="submit">Фільтрувати</button>
+    </form>
+
     <ul>
         {% for location in locations %}
             <li>

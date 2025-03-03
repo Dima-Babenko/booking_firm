@@ -8,6 +8,7 @@ from config.forms import RegisterForm
 from booking.models import Location, Booking
 from datetime import datetime
 
+
 def home(request):
     return render(request, "home.html")
 
@@ -31,7 +32,11 @@ def dashboard(request):
 
 @login_required
 def create_booking(request):
-    locations = Location.objects.filter(is_available=True)
+    locations = Location.objects.all()  # Показываем все локации
+
+    if request.GET.get("available") == "true":
+        locations = locations.filter(is_available=True)  # Фильтруем только доступные
+
     return render(request, "create_booking.html", {"locations": locations})
 
 
