@@ -1,0 +1,114 @@
+#content-start{background: black;
+    color: cyan;}
+
+#content-related{ background-color: black;
+    color: cyan;
+    padding: 16;
+    box-shadow: 0 0 20px cyan;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+td{ background-color: black;
+    color: cyan;
+    padding: 15px;
+    box-shadow: 0 0 20px cyan;
+    flex-direction: column;
+    align-items: center;}
+th{background-color: black;
+    color: cyan;
+    padding: 15px;
+    box-shadow: 0 0 20px cyan;
+    flex-direction: column;
+    align-items: center;}
+#auth-user{background-color: black;
+    color: cyan;
+    padding: 15px;
+    box-shadow: 0 0 20px cyan;
+    flex-direction: column;
+    align-items: center}
+#auth-group{background-color: black;
+    color: cyan;
+    padding: 15px;
+    box-shadow: 0 0 20px cyan;
+    flex-direction: column;
+    align-items: center}
+#booking-location{background-color: black;
+    color: cyan;
+    padding: 15px;
+    box-shadow: 0 0 20px cyan;
+    flex-direction: column;
+    align-items: center}
+#booking-booking{background-color: black;
+    color: cyan;
+    padding: 15px;
+    box-shadow: 0 0 20px cyan;
+    flex-direction: column;
+    align-items: center}
+
+.module caption{background-color: black;
+    color: cyan;
+    padding: 15px;
+    box-shadow: 0 0 20px cyan;
+    flex-direction: column;
+    align-items: center}
+#header{background-color: black;
+    color: cyan;
+    padding: 15px;
+    box-shadow: 0 0 20px cyan; }
+#user-tools{color: cyan}
+#site-name a:link, #site-name a:visited {color: cyan}
+#nav-sidebar {background-image: url('5.jpg');}
+#changelist-search{background-color: black;
+    color: cyan;
+     padding: 15px}
+#searchbar{background-color: black;
+    color: cyan;
+    padding: 15px; }
+#changelist{background: darkcyan;
+    color: cyan;}
+.paginator{background: black;
+    color: cyan;}
+label{background: black;
+    color: cyan;
+    padding: 15px}
+select{background: black;
+    color: cyan;}
+ul{background: black;
+    color: cyan;}
+#changelist-filter-extra-actions{background: black;
+    color: cyan;}
+summary{background: black;
+    color: cyan;}
+details{background: black;
+    color: cyan;}
+#changelist-filter-header{background: black;
+    color: cyan;}
+a{background: black;
+    color: cyan}
+span{background: black;
+    color: cyan}
+#footer{background: black;
+    color: cyan}
+div.breadcrumbs{background: black;
+    color: cyan}
+button{padding: 10px; background: black;
+    color: cyan}
+.flex-container{padding: 10px; background: black;
+    color: cyan}
+#id_end_time_0{padding: 10px; background: black;
+    color: cyan}
+#id_end_time_1{padding: 10px; background: black;
+    color: cyan}
+#id_start_time_0{padding: 10px; background: black;
+    color: cyan}
+#id_start_time_1{padding: 10px; background: black;
+    color: cyan}
+#id_total_price{padding: 10px; background: black;
+    color: cyan}
+
+#nav-filter{background: black;
+    color: cyan}
+option{padding: 10px; background: black;
+    color: cyan}
+
