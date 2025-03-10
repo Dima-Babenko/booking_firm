@@ -151,7 +151,7 @@ background: black;
 .submit-row {
     padding: 12px 14px 12px;
     margin: 0 0 20px;
-    background: cyan;
+    background: black;
     border: 1px solid var(--hairline-color);
     border-radius: 4px;
     overflow: hidden;
@@ -183,3 +183,4 @@ html[data-theme="light"], :root {
     color: cyan;}
 select{background: black;
     color: cyan;}
+
