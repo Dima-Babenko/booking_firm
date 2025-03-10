@@ -3,14 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <title>Авторизація</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px cyan;
+            animation: glow 1.5s infinite alternate;
+            position: relative;
+            z-index: 2;
+            width: 300px;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px cyan;
+            }
+            to {
+                box-shadow: 0 0 20px cyan, 0 0 30px cyan;
+            }
+        }
+        h2 {
+            font-size: 28px;
+            text-shadow: 0 0 10px cyan;
+        }
+        input {
+            padding: 10px;
+            width: calc(100% - 20px);
+            border: none;
+            outline: none;
+            background: black;
+            color: white;
+            border-bottom: 2px solid cyan;
+            margin: 10px 0;
+        }
+        button {
+            background: black;
+            color: cyan;
+            border: 2px solid cyan;
+            padding: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+        }
+        button:hover {
+            background: cyan;
+            color: black;
+            box-shadow: 0 0 10px cyan;
+        }
+        a {
+            color: cyan;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        a:hover {
+            text-shadow: 0 0 10px cyan;
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: cyan;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(100vh) scale(1);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(-10vh) scale(0.5);
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h2>Авторизація</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Увійти</button>
-    </form>
-    <p>Не маєте акаунта? <a href="{% url 'register' %}">Реєстрація</a></p>
+    <div class="particles"></div>
+
+    <div class="container">
+        <h2>Авторизація</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Увійти</button>
+        </form>
+        <p>Не маєте акаунта? <a href="{% url 'register' %}">Реєстрація</a></p>
+    </div>
+
+    <script>
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            for (let i = 0; i < 50; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.animationDuration = `${Math.random() * 5 + 3}s`;
+                particle.style.animationDelay = `-${Math.random() * 5}s`;
+                particlesContainer.appendChild(particle);
+            }
+        }
+        createParticles();
+    </script>
 </body>
 </html>

@@ -2,11 +2,131 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Головна</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Неоновий портал</title>
+    <style>
+        body {
+            background-color: black;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px cyan, 0 0 40px rgba(0, 255, 255, 0.3);
+            animation: neon-glow 2s infinite alternate;
+        }
+
+        @keyframes neon-glow {
+            0% {
+                box-shadow: 0 0 10px cyan, 0 0 20px rgba(0, 255, 255, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 20px cyan, 0 0 50px cyan;
+            }
+        }
+
+        h1 {
+            font-size: 42px;
+            color: cyan;
+            text-shadow: 0 0 3px cyan, 0 0 10px rgba(0, 255, 255, 0.6);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 3px cyan, 0 0 10px rgba(0, 255, 255, 0.6);
+            }
+            to {
+                text-shadow: 0 0 5px cyan, 0 0 20px rgba(0, 255, 255, 0.9);
+            }
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 20px;
+            padding: 15px 30px;
+            font-size: 20px;
+            color: cyan;
+            border: 2px solid cyan;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 10px cyan, 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .btn:hover {
+            background-color: cyan;
+            color: black;
+            box-shadow: 0 0 15px cyan, 0 0 30px cyan;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: cyan;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: moveParticles 5s linear infinite;
+        }
+
+        @keyframes moveParticles {
+            from {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(-10vh);
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Ласкаво просимо!</h1>
-    <a href="{% url 'register' %}"><button>Реєстрація</button></a>
-    <a href="{% url 'login' %}"><button>Авторизація</button></a>
+
+    <div class="container">
+        <h1>Портал подорожей</h1>
+        <a href="{% url 'register' %}" class="btn">Реєстрація</a>
+        <a href="{% url 'login' %}" class="btn">Авторизація</a>
+    </div>
+
+    <div class="particles"></div>
+
+    <script>
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            for (let i = 0; i < 50; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.animationDuration = `${Math.random() * 5 + 3}s`;
+                particlesContainer.appendChild(particle);
+            }
+        }
+        createParticles();
+    </script>
+
 </body>
 </html>

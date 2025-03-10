@@ -2,12 +2,111 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Головна2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель управління</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h1 {
+            font-size: 32px;
+            text-shadow: 0 0 10px cyan;
+        }
+        .box {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px cyan;
+            display: inline-block;
+            margin: 20px;
+            width: 300px;
+        }
+        button {
+            background: black;
+            color: cyan;
+            border: 2px solid cyan;
+            padding: 10px 20px;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 18px;
+        }
+        button:hover {
+            background: cyan;
+            color: black;
+            box-shadow: 0 0 10px cyan;
+        }
+        .footer {
+            margin-top: 50px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 0 20px cyan;
+        }
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .card {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px cyan;
+            width: 280px;
+            margin: 15px;
+        }
+        .card h3 {
+            color: cyan;
+        }
+        .card p {
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <h1>Вітаємо, {{ user.username }}!</h1>
-    <p>Ви успішно увійшли в систему.</p>
-    <a href="{% url 'create_booking' %}"><button>Створити бронювання</button></a>
-    <a href="{% url 'my_bookings' %}"><button>Мої бронювання</button></a>
+    <div class="container">
+        <h1>Вітаємо, {{ user.username }}!</h1>
+        <p>Ви успішно увійшли до вашої панелі управління.</p>
+
+        <div class="box">
+            <a href="{% url 'create_booking' %}">
+                <button>Створити нове бронювання</button>
+            </a>
+        </div>
+
+        <div class="box">
+            <a href="{% url 'my_bookings' %}">
+                <button>Мої бронювання</button>
+            </a>
+        </div>
+
+    </div>
+
+    <h2>Топ-пропозиції</h2>
+    <div class="grid">
+        {% for location in top_locations %}
+            <div class="card">
+                <h3>{{ location.title }}</h3>
+                <p>{{ location.description }}</p>
+                <p><strong>Ціна:</strong> {{ location.price }} грн</p>
+                <a href="{% url 'location_detail' location.id %}">
+                    <button>Оглянути</button>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="footer">
+        <p>© 2025 Система бронювання | Всі права захищені</p>
+    </div>
 </body>
 </html>

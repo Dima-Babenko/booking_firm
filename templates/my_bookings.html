@@ -2,28 +2,142 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мої бронювання</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 32px;
+            text-shadow: 0 0 10px cyan;
+            margin-top: 50px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        /* Стиль для списку бронювань */
+        .booking-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .booking-card {
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px cyan;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+            text-align: left;
+        }
+
+        .booking-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .booking-card h4 {
+            font-size: 24px;
+            color: cyan;
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        .booking-card p {
+            font-size: 16px;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        .booking-card button {
+            background: black;
+            color: cyan;
+            border: 2px solid cyan;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .booking-card button:hover {
+            background: cyan;
+            color: black;
+            box-shadow: 0 0 10px cyan;
+        }
+
+        /* Стиль для кнопки "Назад" */
+        .back-button {
+            background-color: black;
+            color: cyan;
+            border: 2px solid cyan;
+            padding: 12px 25px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .back-button:hover {
+            background-color: cyan;
+            color: black;
+            box-shadow: 0 0 10px cyan;
+        }
+
+        /* Стиль для повідомлення, якщо нема бронювань */
+        .no-booking {
+            font-size: 18px;
+            color: #ccc;
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Мої бронювання</h2>
-    <a href="{% url 'dashboard' %}"><button>Назад</button></a>
 
-    <ul>
-        {% for booking in bookings %}
-            <li>
-                <h4>{{ booking.location.title }}</h4>
-                <p>Початок: {{ booking.start_time|date:"d.m.Y" }}</p>
-                <p>Кінець: {{ booking.end_time|date:"d.m.Y" }}</p>
-                <p>Загальна ціна: {{ booking.total_price }} грн</p>
-                <p>{% if booking.confirmed %}✅ Підтверджено{% else %}⏳ Очікує підтвердження{% endif %}</p>
-                <form action="{% url 'complete_booking' booking.id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit">Завершити бронювання</button>
-                </form>
-            </li>
-        {% empty %}
-            <p>У вас немає бронювань.</p>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h2>Мої бронювання</h2>
+
+        <!-- Список бронювань -->
+        <div class="booking-list">
+            {% for booking in bookings %}
+                <div class="booking-card">
+                    <h4>{{ booking.location.title }}</h4>
+                    <p>Початок: {{ booking.start_time|date:"d.m.Y" }}</p>
+                    <p>Кінець: {{ booking.end_time|date:"d.m.Y" }}</p>
+                    <p>Загальна ціна: {{ booking.total_price }} грн</p>
+                    <p>{% if booking.confirmed %}✅ Підтверджено{% else %}⏳ Очікує підтвердження{% endif %}</p>
+                    <form action="{% url 'complete_booking' booking.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Завершити бронювання</button>
+                    </form>
+                </div>
+            {% empty %}
+                <p class="no-booking">У вас немає бронювань.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Кнопка "Назад" -->
+        <a href="{% url 'dashboard' %}" class="back-button">Назад</a>
+    </div>
+
 </body>
 </html>

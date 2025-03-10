@@ -2,33 +2,196 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Доступні локації</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 32px;
+            text-shadow: 0 0 10px cyan;
+            margin-top: 50px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        /* Стиль для фільтра */
+        .filter-form {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 18px;
+        }
+
+        .filter-form button {
+            background: black;
+            color: cyan;
+            border: 2px solid cyan;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .filter-form button:hover {
+            background: cyan;
+            color: black;
+            box-shadow: 0 0 10px cyan;
+        }
+
+        /* Стиль для карток локацій */
+        .locations-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            justify-items: center;
+            margin-top: 50px;
+        }
+
+        .location-card {
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px cyan;
+            width: 100%;
+            max-width: 350px;
+            padding: 20px;
+            transition: transform 0.3s;
+            text-align: left;
+        }
+
+        .location-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .location-card h4 {
+            font-size: 24px;
+            color: cyan;
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        .location-card p {
+            font-size: 16px;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: cyan;
+            margin-bottom: 15px;
+        }
+
+        .location-card button {
+            background: black;
+            color: cyan;
+            border: 2px solid cyan;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .location-card button:hover {
+            background: cyan;
+            color: black;
+            box-shadow: 0 0 10px cyan;
+        }
+
+        .footer {
+            margin-top: 50px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 0 20px cyan;
+            text-align: center;
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 16px;
+            color: #ccc;
+        }
+
+        /* Стиль для кнопки "Назад" */
+        .back-button {
+            background-color: black;
+            color: cyan;
+            border: 2px solid cyan;
+            padding: 12px 25px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .back-button:hover {
+            background-color: cyan;
+            color: black;
+            box-shadow: 0 0 10px cyan;
+        }
+    </style>
 </head>
 <body>
-    <h2>Доступні локації</h2>
-    <a href="{% url 'dashboard' %}"><button>Назад</button></a>
 
-    <form method="GET">
-        <label>
-            <input type="checkbox" name="available" value="true"
-                {% if request.GET.available == "true" %}checked{% endif %}>
-            Тільки доступні
-        </label>
-        <button type="submit">Фільтрувати</button>
-    </form>
+    <div class="container">
+        <h2>Доступні локації</h2>
 
-    <ul>
-        {% for location in locations %}
-            <li>
-                <h4>{{ location.title }}</h4>
-                <p>Ціна: {{ location.price }} грн</p>
-                <p>Місткість: {{ location.capacity }} осіб</p>
-                <p>Опис: {{ location.description }}</p>
-                <a href="{% url 'location_detail' location.id %}"><button>Оглянути</button></a>
-            </li>
-        {% empty %}
-            <p>Немає доступних локацій.</p>
-        {% endfor %}
-    </ul>
+        <!-- Форма для фільтра -->
+        <div class="filter-form">
+            <form method="GET">
+                <label>
+                    <input type="checkbox" name="available" value="true"
+                        {% if request.GET.available == "true" %}checked{% endif %}>
+                    Тільки доступні
+                </label>
+                <button type="submit">Фільтрувати</button>
+            </form>
+        </div>
+
+        <!-- Список локацій -->
+        <div class="locations-list">
+            {% for location in locations %}
+                <div class="location-card">
+                    <h4>{{ location.title }}</h4>
+                    <p>{{ location.description|truncatewords:15 }}</p>
+                    <p class="price">Ціна: {{ location.price }} грн</p>
+                    <p>Місткість: {{ location.capacity }} осіб</p>
+                    <a href="{% url 'location_detail' location.id %}">
+                        <button>Оглянути</button>
+                    </a>
+                </div>
+            {% empty %}
+                <p>Немає доступних локацій.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Кнопка "Назад" перенесена вниз -->
+        <a href="{% url 'dashboard' %}" class="back-button">Назад</a>
+    </div>
+
+    <!-- Футер -->
+    <div class="footer">
+        <p>© 2025 Система бронювання | Всі права захищені</p>
+    </div>
+
 </body>
 </html>

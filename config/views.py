@@ -1,17 +1,14 @@
+# views.py
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.utils.timezone import now
-from django.core.mail import send_mail
-from django.conf import settings
 from config.forms import RegisterForm
 from booking.models import Location, Booking
 from datetime import datetime
 
-
 def home(request):
     return render(request, "home.html")
-
 
 def register(request):
     if request.method == "POST":
@@ -24,21 +21,20 @@ def register(request):
         form = RegisterForm()
     return render(request, "register.html", {"form": form})
 
-
 @login_required
 def dashboard(request):
-    return render(request, "dashboard.html")
+    top_locations = Location.objects.filter(is_available=True).order_by('-price')[:3]
+    return render(request, "dashboard.html", {"top_locations": top_locations})
 
 
 @login_required
 def create_booking(request):
-    locations = Location.objects.all()  # Показываем все локации
+    locations = Location.objects.all()
 
     if request.GET.get("available") == "true":
-        locations = locations.filter(is_available=True)  # Фильтруем только доступные
+        locations = locations.filter(is_available=True)
 
     return render(request, "create_booking.html", {"locations": locations})
-
 
 @login_required
 def location_detail(request, location_id):
@@ -96,19 +92,16 @@ def location_detail(request, location_id):
 
     return render(request, "location_detail.html", {"location": location})
 
-
 @login_required
 def my_bookings(request):
     bookings = Booking.objects.filter(user=request.user)
     return render(request, "my_bookings.html", {"bookings": bookings})
-
 
 @login_required
 def complete_booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id, user=request.user)
     booking.delete()
     return redirect("my_bookings")
-
 
 def confirm_booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
