@@ -70,8 +70,7 @@ th{background-color: black;
 .paginator{background: black;
     color: cyan;}
 label{background: black;
-    color: cyan;
-    padding: 15px}
+    color: cyan;}
 select{background: black;
     color: cyan;}
 ul{background: black;
@@ -86,8 +85,8 @@ details{background: black;
     color: cyan;}
 a{background: black;
     color: cyan;}
-span{background: black;
-    color: cyan;}
+span{
+    color: black;}
 #footer{background: black;
     color: cyan;}
 div.breadcrumbs{background: black;
@@ -119,11 +118,68 @@ option{padding: 10px; background: black;
    background: black;
     color: cyan;
 }
-fieldset{
-   background: black;
+input:not([type]), input[type=text], input[type=password], input[type=email], input[type=url], input[type=number], input[type=tel], textarea, select, .vTextField {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 5px 6px;
+    margin-top: 0;
     color: cyan;
+    background-color: black;
 }
 .module{
    background: black;
     color: cyan;
 }
+.button.default, input[type=submit].default, .submit-row input.default {
+background: black;
+    color: cyan;
+}
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: black;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+     color: cyan;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+#changelist .paginator{background: black;
+    color: cyan;}
+
+.submit-row {
+    padding: 12px 14px 12px;
+    margin: 0 0 20px;
+    background: cyan;
+    border: 1px solid var(--hairline-color);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex
+;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+html[data-theme="light"], :root {
+--body-bg: darkcyan;
+--body-quiet-color: cyan;
+--hairline-color: darkcyan;
+--darkened-bg: black;
+--header-link-color: cyan;
+--header-bg: black);
+--border-color: cyan;
+--link-fg:cyan;
+--close-button-bg:black;
+--link-selected-fg: cyan;
+--secondary: black;
+--selected-bg: black;
+--body-fg: cyan;
+--header-color: darkcyan;
+--breadcrumbs-link-fg: cyan;
+--object-tools-fg: cyan;
+--link-hover-color:cyan;}
+#changelist .actions .button{background: black;
+    color: cyan;}
+select{background: black;
+    color: cyan;}
