@@ -85,30 +85,45 @@ details{background: black;
 #changelist-filter-header{background: black;
     color: cyan;}
 a{background: black;
-    color: cyan}
+    color: cyan;}
 span{background: black;
-    color: cyan}
+    color: cyan;}
 #footer{background: black;
-    color: cyan}
+    color: cyan;}
 div.breadcrumbs{background: black;
-    color: cyan}
+    color: cyan;}
 button{padding: 10px; background: black;
-    color: cyan}
+    color: cyan;}
 .flex-container{padding: 10px; background: black;
-    color: cyan}
+    color: cyan;}
 #id_end_time_0{padding: 10px; background: black;
-    color: cyan}
+    color: cyan;}
 #id_end_time_1{padding: 10px; background: black;
-    color: cyan}
+    color: cyan;}
 #id_start_time_0{padding: 10px; background: black;
-    color: cyan}
+    color: cyan;}
 #id_start_time_1{padding: 10px; background: black;
-    color: cyan}
+    color: cyan;}
 #id_total_price{padding: 10px; background: black;
-    color: cyan}
+    color: cyan;}
 
 #nav-filter{background: black;
-    color: cyan}
+    color: cyan;}
 option{padding: 10px; background: black;
-    color: cyan}
-
+    color: cyan;}
+#id_permissions_input{; background: black;
+    color: cyan;}
+#id_permissions_selected_input{ background: black;
+    color: cyan;}
+#id_name{
+   background: black;
+    color: cyan;
+}
+fieldset{
+   background: black;
+    color: cyan;
+}
+.module{
+   background: black;
+    color: cyan;
+}
