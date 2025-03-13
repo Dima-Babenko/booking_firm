@@ -3,138 +3,455 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ location.title }}</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #000;
-            color: #0ff;
-            margin: 0;
-            padding: 20px;
-        }
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #000;
+                color: #0ff;
+                margin: 0;
+                padding: 20px;
+            }
 
-        .container {
-            display: flex;
-            max-width: 900px;
-            margin: auto;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px #0ff;
-        }
+            .booking-info {
+                text-align: center;
+                border: 2px solid #0ff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 15px #0ff;
+                max-width: 500px;
+                margin: auto;
+                background-color: rgba(0, 0, 0, 0.9);
+            }
 
-        .location-info {
-            width: 50%;
-            padding-right: 30px;
-        }
+            .booking-info p {
+                font-size: 20px;
+                margin: 10px 0;
+                padding: 10px;
+                border-bottom: 1px solid #0ff;
+            }
 
-        h2 {
-            font-size: 26px;
-            color: #0ff;
-            text-shadow: 0 0 10px #0ff;
-        }
+            .booking-info p:last-child {
+                border-bottom: none;
+            }
 
-        p {
-            font-size: 16px;
-            margin: 10px 0;
-        }
+            .booking-info strong {
+                font-size: 22px;
+                color: #0ff;
+                display: block;
+                margin-bottom: 5px;
+            }
 
-        .booking-form {
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 20px;
-        }
+            .booking-info input[type="email"] {
+                width: 90%;
+                padding: 12px;
+                margin: 15px 0;
+                border: 2px solid #0ff;
+                background-color: black;
+                color: #0ff;
+                border-radius: 10px;
+                font-size: 18px;
+                text-align: center;
+            }
 
-        label {
-            font-size: 14px;
-            font-weight: bold;
-        }
+            .booking-info input[type="email"]:focus {
+                outline: none;
+                box-shadow: 0 0 15px #0ff;
+            }
 
-        input {
-            width: 100%;
-            padding: 12px;
-            font-size: 14px;
-            border: 1px solid #0ff;
-            border-radius: 5px;
-            background-color: black;
-            color: #0ff;
-            outline: none;
-        }
+            .booking-info button#bookBtn {
+                width: 100%;
+                padding: 14px;
+                margin-top: 20px;
+                background-color: #0ff;
+                color: black;
+                font-size: 20px;
+                border: none;
+                border-radius: 12px;
+                cursor: pointer;
+                font-weight: bold;
+                text-transform: uppercase;
+                transition: 0.3s;
+            }
 
-        input::placeholder {
-            color: #088;
-        }
+            .booking-info button#bookBtn:hover {
+                background-color: #088;
+                color: white;
+                box-shadow: 0 0 15px #088;
+            }
 
-        .btn {
-            background-color: transparent;
-            border: 1px solid #0ff;
-            color: #0ff;
-            padding: 12px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-            border-radius: 5px;
-            text-transform: uppercase;
-            margin-top: 10px;
-        }
+            .container {
+                display: flex;
+                max-width: 1000px;
+                margin: auto;
+                background-color: rgba(0, 0, 0, 0.9);
+                padding: 40px;
+                border-radius: 15px;
+                box-shadow: 0 0 25px #0ff;
+            }
 
-        .btn:hover {
-            background-color: #0ff;
-            color: black;
-        }
+            .location-info {
+                width: 50%;
+                padding-right: 40px;
+            }
 
-        .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            color: #0ff;
-            text-decoration: none;
-            font-size: 14px;
-            border: 1px solid #0ff;
-            padding: 12px;
-            border-radius: 5px;
-            text-align: center;
-        }
+            .location-info {
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
 
-        .back-link:hover {
-            background-color: #0ff;
-            color: black;
-        }
+            .location-info h2 {
+                font-size: 28px;
+                color: #0ff;
+                text-shadow: 0 0 15px #0ff;
+                margin-bottom: 15px;
+            }
 
-        .error {
-            color: red;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="location-info">
-            <h2>{{ location.title }}</h2>
-            <p><strong>Ціна:</strong> {{ location.price }} грн</p>
-            <p><strong>Місткість:</strong> {{ location.capacity }} осіб</p>
-            <p><strong>Опис:</strong> {{ location.description }}</p>
+            .location-info img {
+                max-width: 100%;
+                border-radius: 15px;
+                display: block;
+                margin: auto;
+            }
+
+            .calendar-container {
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            .calendar-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+            }
+
+            .calendar-header button {
+                background-color: transparent;
+                border: 2px solid #0ff;
+                color: #0ff;
+                padding: 8px 12px;
+                cursor: pointer;
+                border-radius: 10px;
+                font-size: 18px;
+            }
+
+            .calendar-header button:hover {
+                background-color: #0ff;
+                color: black;
+            }
+
+            .calendar {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                gap: 10px;
+                padding: 15px;
+                background: rgba(0, 0, 0, 0.8);
+                border-radius: 10px;
+                box-shadow: 0 0 10px #0ff;
+            }
+
+            .calendar button {
+                width: 50px;
+                height: 50px;
+                background-color: black;
+                color: #0ff;
+                border: 2px solid #0ff;
+                cursor: pointer;
+                font-size: 18px;
+                border-radius: 10px;
+            }
+
+            .calendar button:hover {
+                background-color: #0ff;
+                color: black;
+            }
+
+            .selected {
+                background-color: #0ff !important;
+                color: black !important;
+            }
+
+            .range {
+                background-color: #088 !important;
+            }
+
+            input[type="email"] {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 2px solid #0ff;
+                background-color: black;
+                color: #0ff;
+                border-radius: 10px;
+                font-size: 16px;
+            }
+
+            input[type="email"]:focus {
+                outline: none;
+                box-shadow: 0 0 10px #0ff;
+            }
+
+            button#bookBtn {
+                width: 100%;
+                padding: 12px;
+                margin-top: 15px;
+                background-color: #0ff;
+                color: black;
+                font-size: 18px;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            button#bookBtn:hover {
+                background-color: #088;
+                color: white;
+            }
+            .site-header, .site-footer {
+                text-align: center;
+                padding: 20px;
+                background: linear-gradient(90deg, #011, #033, #011);
+                color: #0ff;
+                box-shadow: 0 0 20px #0ff;
+                border-radius: 12px;
+                margin-bottom: 20px;
+                animation: glow 2s infinite alternate;
+            }
+
+            @keyframes glow {
+                0% { box-shadow: 0 0 10px #0ff; }
+                100% { box-shadow: 0 0 20px #0ff; }
+            }
+
+            .booked {
+                background-color: red !important;
+                color: white !important;
+                border-color: darkred !important;
+                cursor: not-allowed !important;
+            }
+
+            .site-header h1 {
+                font-size: 36px;
+                font-weight: bold;
+                text-transform: uppercase;
+                text-shadow: 0 0 20px #0ff;
+                letter-spacing: 2px;
+            }
+
+            .site-header p {
+                font-size: 18px;
+                font-weight: lighter;
+                opacity: 0.9;
+            }
+
+            .site-footer {
+                margin-top: 30px;
+                padding: 15px;
+                font-size: 14px;
+                background: rgba(0, 0, 0, 0.85);
+                border-top: 2px solid #0ff;
+                opacity: 0.8;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="site-header">
+            <h1>{{ booking_name|default:location.title }}</h1>
+            <p>Найкраще місце для бронювання</p>
+        </header>
+        <div class="container">
+            <div class="location-info">
+                <h2>{{ location.title }}</h2>
+                {% if location.image_url %}
+                    <img src="{{ location.image_url }}" alt="{{ location.title }}" style="max-width: 100%; border-radius: 10px;">
+                {% endif %}
+            </div>
+            <div class="booking-info">
+                <p><strong>Ціна:</strong> {{ location.price }} грн</p>
+                <p><strong>Місткість:</strong> {{ location.capacity }} осіб</p>
+                <p><strong>Опис:</strong> {{ location.description }}</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <label for="email">Ваш Email:</label>
+                    <input type="email" name="email" id="email" required placeholder="example@email.com">
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <button type="button" id="prevMonth">&#9665;</button>
+                            <span id="calendarTitle"></span>
+                            <button type="button" id="nextMonth">&#9655;</button>
+                        </div>
+                        <div id="calendar" class="calendar"></div>
+                    </div>
+                    <input type="hidden" id="start_date" name="start_date">
+                    <input type="hidden" id="end_date" name="end_date">
+                    <button type="submit" id="bookBtn">Підтвердити бронювання</button>
+                </form>
+            </div>
         </div>
-        <div class="booking-form">
-            {% if error %}
-                <p class="error">{{ error }}</p>
-            {% endif %}
-            <form method="post">
-                {% csrf_token %}
-                <label for="email">Ваш Email:</label>
-                <input type="email" name="email" required placeholder="example@email.com">
+        <footer class="site-footer">
+            <p>&copy; 2025 Maliby Booking. Усі права захищено.</p>
+        </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const calendarEl = document.getElementById("calendar");
+            const calendarTitle = document.getElementById("calendarTitle");
+            const prevMonthBtn = document.getElementById("prevMonth");
+            const nextMonthBtn = document.getElementById("nextMonth");
+            const bookBtn = document.getElementById("bookBtn");
+            const emailInput = document.getElementById("email");
+            const startDateInput = document.getElementById("start_date");
+            const endDateInput = document.getElementById("end_date");
 
-                <label for="start_date">Дата початку:</label>
-                <input type="date" name="start_date" required>
+            let currentDate = new Date();
+            let selectedStart = null;
+            let selectedEnd = null;
+            let bookedDates = new Set();
 
-                <label for="end_date">Дата завершення:</label>
-                <input type="date" name="end_date" required>
+            function loadBookedDates(locationId) {
+                fetch(`/api/bookings/${locationId}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        bookedDates.clear();
+                        data.bookings.forEach(booking => {
+                            let start = new Date(booking.start);
+                            let end = new Date(booking.end);
+                            while (start <= end) {
+                                bookedDates.add(start.toISOString().split("T")[0]);
+                                start.setDate(start.getDate() + 1);
+                            }
+                        });
+                        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+                    })
+                    .catch(error => console.error("Помилка завантаження бронювань:", error));
+            }
 
-                <button type="submit" class="btn">Забронювати</button>
-            </form>
-            <a href="{% url 'create_booking' %}" class="back-link">Назад до локацій</a>
-        </div>
-    </div>
+            function generateCalendar(year, month) {
+                calendarEl.innerHTML = "";
+                calendarTitle.textContent = new Date(year, month).toLocaleString('uk-UA', { month: 'long', year: 'numeric' });
+
+                let firstDay = new Date(year, month, 1).getDay();
+                let daysInMonth = new Date(year, month + 1, 0).getDate();
+                if (firstDay === 0) firstDay = 7;
+
+                for (let i = 1; i < firstDay; i++) {
+                    let empty = document.createElement("div");
+                    calendarEl.appendChild(empty);
+                }
+
+                for (let day = 1; day <= daysInMonth; day++) {
+                    let button = document.createElement("button");
+                    button.textContent = day;
+                    let date = new Date(year, month, day).toISOString().split("T")[0];
+                    button.dataset.date = date;
+
+                    if (bookedDates.has(date)) {
+                        button.classList.add("booked");
+                        button.disabled = true;
+                    } else {
+                        button.addEventListener("click", selectDate);
+                        button.addEventListener("touchstart", selectDate);
+                    }
+                    calendarEl.appendChild(button);
+                }
+                updateCalendarUI();
+            }
+
+            function selectDate(event) {
+                let date = event.target.dataset.date;
+
+                if (!selectedStart || (selectedStart && selectedEnd)) {
+                    selectedStart = date;
+                    selectedEnd = null;
+                } else {
+                    if (new Date(date) < new Date(selectedStart)) {
+                        selectedEnd = selectedStart;
+                        selectedStart = date;
+                    } else {
+                        selectedEnd = date;
+                    }
+
+                    if (hasBlockedDatesInRange(selectedStart, selectedEnd)) {
+                        alert("У вибраному діапазоні є заброньовані дати!");
+                        selectedStart = null;
+                        selectedEnd = null;
+                    }
+                }
+
+                updateCalendarUI();
+                startDateInput.value = selectedStart || "";
+                endDateInput.value = selectedEnd || "";
+            }
+
+            function hasBlockedDatesInRange(start, end) {
+                let checkDate = new Date(start);
+                while (checkDate <= new Date(end)) {
+                    if (bookedDates.has(checkDate.toISOString().split("T")[0])) return true;
+                    checkDate.setDate(checkDate.getDate() + 1);
+                }
+                return false;
+            }
+
+            function updateCalendarUI() {
+                document.querySelectorAll("#calendar button").forEach(btn => {
+                    let btnDate = btn.dataset.date;
+                    btn.classList.remove("selected", "range");
+
+                    if (selectedStart === btnDate) btn.classList.add("selected");
+                    if (selectedStart && selectedEnd && btnDate > selectedStart && btnDate < selectedEnd) {
+                        btn.classList.add("range");
+                    }
+                    if (selectedEnd === btnDate) btn.classList.add("selected");
+                });
+            }
+
+            prevMonthBtn.addEventListener("click", function () {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+            });
+
+            nextMonthBtn.addEventListener("click", function () {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+            });
+
+            bookBtn.addEventListener("click", function (event) {
+                let email = emailInput.value.trim();
+                let startDate = startDateInput.value;
+                let endDate = endDateInput.value;
+
+                emailInput.style.border = "";
+                startDateInput.style.border = "";
+                endDateInput.style.border = "";
+
+                if (!email || !startDate || !endDate) {
+                    event.preventDefault();
+                    alert("Будь ласка, заповніть всі поля перед бронюванням!");
+                    if (!email) emailInput.style.border = "2px solid red";
+                    if (!startDate) startDateInput.style.border = "2px solid red";
+                    if (!endDate) endDateInput.style.border = "2px solid red";
+                } else {
+                    selectedStart = null;
+                    selectedEnd = null;
+                    updateCalendarUI();
+                }
+            });
+
+            [emailInput, startDateInput, endDateInput].forEach(input => {
+                input.addEventListener("input", function () {
+                    input.style.border = "";
+                });
+            });
+
+            loadBookedDates({{ location.id }});
+        });
+    </script>
+
+
+
+
 </body>
 </html>

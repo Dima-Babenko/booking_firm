@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from config.views import home, register, dashboard, create_booking, my_bookings, location_detail, complete_booking, confirm_booking
+from config.views import home, register, dashboard, create_booking, my_bookings, location_detail, complete_booking, \
+    confirm_booking, get_booked_dates, book_place
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -15,4 +16,6 @@ urlpatterns = [
     path("my-bookings/", my_bookings, name="my_bookings"),
     path("complete-booking/<int:booking_id>/", complete_booking, name="complete_booking"),
     path("confirm-booking/<int:booking_id>/", confirm_booking, name="confirm_booking"),
+    path("api/bookings/<int:location_id>/", get_booked_dates, name="get_booked_dates"),
+    path("book/<int:place_id>/", book_place, name="book_place"),
 ]

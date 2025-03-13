@@ -1,14 +1,17 @@
-# views.py
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from config.forms import RegisterForm
+from django.core.mail import send_mail
 from booking.models import Location, Booking
 from datetime import datetime
+from django.conf import settings
+from django.http import JsonResponse
+from .forms import RegisterForm
+
 
 def home(request):
     return render(request, "home.html")
+
 
 def register(request):
     if request.method == "POST":
@@ -21,6 +24,7 @@ def register(request):
         form = RegisterForm()
     return render(request, "register.html", {"form": form})
 
+
 @login_required
 def dashboard(request):
     top_locations = Location.objects.filter(is_available=True).order_by('-price')[:3]
@@ -30,11 +34,10 @@ def dashboard(request):
 @login_required
 def create_booking(request):
     locations = Location.objects.all()
-
     if request.GET.get("available") == "true":
         locations = locations.filter(is_available=True)
-
     return render(request, "create_booking.html", {"locations": locations})
+
 
 @login_required
 def location_detail(request, location_id):
@@ -54,7 +57,6 @@ def location_detail(request, location_id):
         start_time = datetime.strptime(start_date, "%Y-%m-%d")
         end_time = datetime.strptime(end_date, "%Y-%m-%d")
 
-        # Перевірка наявності бронювання
         overlapping_bookings = Booking.objects.filter(
             location=location,
             start_time__lt=end_time,
@@ -92,10 +94,12 @@ def location_detail(request, location_id):
 
     return render(request, "location_detail.html", {"location": location})
 
+
 @login_required
 def my_bookings(request):
     bookings = Booking.objects.filter(user=request.user)
     return render(request, "my_bookings.html", {"bookings": bookings})
+
 
 @login_required
 def complete_booking(request, booking_id):
@@ -103,9 +107,44 @@ def complete_booking(request, booking_id):
     booking.delete()
     return redirect("my_bookings")
 
+
 def confirm_booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
     if not booking.confirmed:
         booking.confirmed = True
         booking.save()
     return redirect("my_bookings")
+
+
+def get_booked_dates(request, location_id):
+    try:
+        location = Location.objects.get(id=location_id)
+    except Location.DoesNotExist:
+        return JsonResponse({'error': 'Location not found'}, status=404)
+
+    bookings = Booking.objects.filter(location=location)
+    events = [
+        {
+            'start': booking.start_time.strftime('%Y-%m-%d'),
+            'end': booking.end_time.strftime('%Y-%m-%d'),
+        }
+        for booking in bookings
+    ]
+    return JsonResponse({'bookings': events})
+
+
+@login_required
+def book_place(request, place_id):
+    location = get_object_or_404(Location, id=place_id)
+    if not location.is_available:
+        return JsonResponse({'error': 'Місце недоступне'}, status=400)
+
+    booking = Booking.objects.create(
+        user=request.user,
+        location=location,
+        start_time=datetime.now(),
+        end_time=datetime.now(),
+        total_price=location.price,
+        confirmed=True
+    )
+    return JsonResponse({'message': 'Місце заброньовано', 'booking_id': booking.id})

@@ -27,32 +27,6 @@
             padding: 30px 0;
         }
 
-        /* Стиль для фільтра */
-        .filter-form {
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            font-size: 18px;
-        }
-
-        .filter-form button {
-            background: black;
-            color: cyan;
-            border: 2px solid cyan;
-            padding: 10px 20px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .filter-form button:hover {
-            background: cyan;
-            color: black;
-            box-shadow: 0 0 10px cyan;
-        }
-
-        /* Стиль для карток локацій */
         .locations-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -76,11 +50,26 @@
             transform: translateY(-10px);
         }
 
+        .location-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
         .location-card h4 {
             font-size: 24px;
             color: cyan;
             margin: 0;
             margin-bottom: 10px;
+        }
+
+        .footer {
+            margin-top: 50px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 0 20px cyan;
         }
 
         .location-card p {
@@ -113,64 +102,16 @@
             color: black;
             box-shadow: 0 0 10px cyan;
         }
-
-        .footer {
-            margin-top: 50px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            box-shadow: 0 0 20px cyan;
-            text-align: center;
-        }
-
-        .footer p {
-            margin: 0;
-            font-size: 16px;
-            color: #ccc;
-        }
-
-        /* Стиль для кнопки "Назад" */
-        .back-button {
-            background-color: black;
-            color: cyan;
-            border: 2px solid cyan;
-            padding: 12px 25px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 30px;
-            margin-bottom: 50px;
-        }
-
-        .back-button:hover {
-            background-color: cyan;
-            color: black;
-            box-shadow: 0 0 10px cyan;
-        }
     </style>
 </head>
 <body>
-
     <div class="container">
         <h2>Доступні локації</h2>
 
-        <!-- Форма для фільтра -->
-        <div class="filter-form">
-            <form method="GET">
-                <label>
-                    <input type="checkbox" name="available" value="true"
-                        {% if request.GET.available == "true" %}checked{% endif %}>
-                    Тільки доступні
-                </label>
-                <button type="submit">Фільтрувати</button>
-            </form>
-        </div>
-
-        <!-- Список локацій -->
         <div class="locations-list">
             {% for location in locations %}
                 <div class="location-card">
+                     <img src="{{ location.image_url|default:'https://via.placeholder.com/280x150' }}" alt="{{ location.title }}">
                     <h4>{{ location.title }}</h4>
                     <p>{{ location.description|truncatewords:15 }}</p>
                     <p class="price">Ціна: {{ location.price }} грн</p>
@@ -183,15 +124,10 @@
                 <p>Немає доступних локацій.</p>
             {% endfor %}
         </div>
-
-        <!-- Кнопка "Назад" перенесена вниз -->
-        <a href="{% url 'dashboard' %}" class="back-button">Назад</a>
     </div>
 
-    <!-- Футер -->
     <div class="footer">
         <p>© 2025 Система бронювання | Всі права захищені</p>
     </div>
-
 </body>
 </html>

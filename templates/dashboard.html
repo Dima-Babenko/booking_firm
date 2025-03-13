@@ -63,6 +63,13 @@
             box-shadow: 0 0 15px cyan;
             width: 280px;
             margin: 15px;
+            text-align: center;
+        }
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
         }
         .card h3 {
             color: cyan;
@@ -95,6 +102,7 @@
     <div class="grid">
         {% for location in top_locations %}
             <div class="card">
+                <img src="{{ location.image_url|default:'https://via.placeholder.com/280x150' }}" alt="{{ location.title }}">
                 <h3>{{ location.title }}</h3>
                 <p>{{ location.description }}</p>
                 <p><strong>Ціна:</strong> {{ location.price }} грн</p>
