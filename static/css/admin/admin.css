@@ -5,7 +5,6 @@
     color: cyan;
     padding: 16;
     box-shadow: 0 0 20px cyan;
-    display: flex;
     flex-direction: column;
     align-items: center;
 }
@@ -136,16 +135,16 @@ background: black;
 }
 
 .button, input[type=submit], input[type=button], .submit-row input, a.button {
-    background: black;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-     color: cyan;
-    cursor: pointer;
-    transition: background 0.15s;
+      background: black;
+      color: cyan;
+      height: 100%;
+      margin: 0;
+      justify-content: center;
+      align-items: center;
 }
 
-#changelist .paginator{background: black;
+#changelist .paginator{
+    background: black;
     color: cyan;}
 
 .submit-row {
@@ -155,10 +154,6 @@ background: black;
     border: 1px solid var(--hairline-color);
     border-radius: 4px;
     overflow: hidden;
-    display: flex
-;
-    gap: 10px;
-    flex-wrap: wrap;
 }
 
 html[data-theme="light"], :root {
@@ -183,4 +178,4 @@ html[data-theme="light"], :root {
     color: cyan;}
 select{background: black;
     color: cyan;}
-
+.submit-row
