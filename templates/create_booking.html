@@ -14,6 +14,38 @@
             text-align: center;
         }
 
+        .navbar {
+            background-color: black;
+            padding: 15px;
+            box-shadow: 0 0 10px cyan;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: cyan;
+            text-decoration: none;
+            font-size: 20px;
+            margin: 0 15px;
+            transition: 0.3s;
+        }
+
+        .navbar a:hover {
+            text-shadow: 0 0 10px cyan;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info span {
+            color: cyan;
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
         h2 {
             font-size: 32px;
             text-shadow: 0 0 10px cyan;
@@ -85,7 +117,7 @@
             margin-bottom: 15px;
         }
 
-        .location-card button {
+        .location-card button, .back-button {
             background: black;
             color: cyan;
             border: 2px solid cyan;
@@ -97,14 +129,35 @@
             margin-top: 10px;
         }
 
-        .location-card button:hover {
+        .location-card button:hover, .back-button:hover {
             background: cyan;
             color: black;
             box-shadow: 0 0 10px cyan;
         }
+
+        .back-container {
+            margin-top: 30px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <div>
+            <a href="{% url 'home' %}">Головна</a>
+            <a href="{% url 'my_bookings' %}">Мої бронювання</a>
+        </div>
+        <div class="user-info">
+            {% if user.is_authenticated %}
+                <span>Вітаємо, {{ user.username }}!</span>
+                <a href="{% url 'logout' %}">Вийти</a>
+            {% else %}
+                <a href="{% url 'login' %}">Увійти</a>
+                <a href="{% url 'register' %}">Реєстрація</a>
+            {% endif %}
+        </div>
+    </div>
+
     <div class="container">
         <h2>Доступні локації</h2>
 
@@ -124,6 +177,10 @@
                 <p>Немає доступних локацій.</p>
             {% endfor %}
         </div>
+    </div>
+
+    <div class="back-container">
+        <button class="back-button" onclick="window.history.back();">Назад</button>
     </div>
 
     <div class="footer">

@@ -25,4 +25,4 @@ class Booking(models.Model):
     confirmed = models.BooleanField(default=False)  # Статус підтвердження бронювання
 
     def __str__(self):
-        return f"{self.user.username} - {self.location.title}"  # Повертає текстовий вигляд бронювання
+        return f"{self.user.username} - {self.location.title}"

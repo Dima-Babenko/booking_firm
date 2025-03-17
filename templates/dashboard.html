@@ -13,6 +13,23 @@
             margin: 0;
             overflow-x: hidden;
         }
+        .header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px;
+            box-shadow: 0 0 20px cyan;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header a {
+            color: cyan;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 0 15px;
+        }
+        .header a:hover {
+            text-shadow: 0 0 10px cyan;
+        }
         .container {
             margin-top: 50px;
         }
@@ -80,6 +97,22 @@
     </style>
 </head>
 <body>
+    <div class="header">
+        <div>
+            <a href="/">Головна</a>
+            <a href="{% url 'my_bookings' %}">Мої бронювання</a>
+        </div>
+        <div>
+            {% if user.is_authenticated %}
+                <span>Вітаємо, {{ user.username }}!</span>
+                <a href="{% url 'logout' %}">Вийти</a>
+            {% else %}
+                <a href="{% url 'login' %}">Увійти</a>
+                <a href="{% url 'register' %}">Реєстрація</a>
+            {% endif %}
+        </div>
+    </div>
+
     <div class="container">
         <h1>Вітаємо, {{ user.username }}!</h1>
         <p>Ви успішно увійшли до вашої панелі управління.</p>
@@ -95,7 +128,6 @@
                 <button>Мої бронювання</button>
             </a>
         </div>
-
     </div>
 
     <h2>Топ-пропозиції</h2>
