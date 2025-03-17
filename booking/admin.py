@@ -14,6 +14,7 @@ class LocationAdmin(admin.ModelAdmin):
         (None, {'fields': ('title', 'price', 'capacity',)}),
         ('Content', {'fields': ('description',)}),)
     search_fields = ('price',)
+    list_editable = ("is_available",)
 
     @admin.action(description="available")
     def Available(self, request, queryset):
