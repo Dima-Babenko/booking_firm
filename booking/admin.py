@@ -1,22 +1,22 @@
 from django.contrib import admin
 from booking.models import Location, Booking
 
+# Register your models here.
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
     list_display = ('user', 'location', 'start_time', 'end_time', "created_at", 'total_price')
-    list_filter = ('total_price',)
-
+    list_filter = ('total_price', 'start_time', 'end_time',)
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ('title', 'price', 'is_available', 'capacity', 'image_url', 'description')
-    list_filter = ('is_available',)
+    list_display = ('title', 'price', 'is_available', 'capacity', 'description')
+    list_filter = ('is_available', )
     fieldsets = (
-        (None, {'fields': ('title', 'price', 'capacity', 'image_url')}),
-        ('Content', {'fields': ('description',)}),
-    )
+        (None, {'fields': ('title', 'price', 'capacity',)}),
+        ('Content', {'fields': ('description',)}),)
     search_fields = ('price',)
+    list_editable = ("is_available",)
 
     @admin.action(description="available")
     def Available(self, request, queryset):
-        queryset.update(is_available=True)
+        queryset.update(is_available = "True")
 
